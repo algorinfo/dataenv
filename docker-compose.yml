@@ -1,0 +1,29 @@
+version: "3.5"
+volumes:
+  datadb:
+
+services:
+  db:
+    image: mariadb:10
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=data
+      - MYSQL_USER=data
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - datadb:/var/lib/mysql
+    ports:
+      - 0.0.0.0:3306:3306
+    networks:
+      - dataenv
+  
+  adminer:
+    image: adminer
+    # restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - dataenv
+  
+networks:
+  dataenv: 
