@@ -1,9 +1,10 @@
 version: "3.5"
 volumes:
   datadb:
+  pgdata:
 
 services:
-  db:
+  mariadb:
     image: mariadb:10
     environment:
       - MYSQL_ROOT_PASSWORD=secret
@@ -16,6 +17,17 @@ services:
       - 0.0.0.0:3306:3306
     networks:
       - dataenv
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 0.0.0.0:5432:5432
+    networks:
+      - dataenv
+
   redis:
     image: redis:6-alpine
     ports:
@@ -25,7 +37,7 @@ services:
     image: adminer
     # restart: always
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:9080:8080
     networks:
       - dataenv
   
