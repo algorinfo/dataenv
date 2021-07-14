@@ -40,6 +40,17 @@ services:
       - 127.0.0.1:9080:8080
     networks:
       - dataenv
+  myadmin:
+    image: phpmyadmin
+    # restart: always
+    ports:
+      - 127.0.0.1:9081:80
+    environment:
+      - PMA_HOST=mariadb
+    networks:
+      - dataenv
+  
+
   
 networks:
   dataenv: 
