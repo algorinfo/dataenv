@@ -2,6 +2,7 @@ version: "3.5"
 volumes:
   datadb:
   pgdata:
+  pgadmin:
 
 services:
   mariadb:
@@ -27,7 +28,18 @@ services:
       - 0.0.0.0:5432:5432
     networks:
       - dataenv
-
+  pgadmin:
+    image: dpage/pgadmin4
+    networks:
+      - dataenv
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 0.0.0.0:9002:80
+      - 0.0.0.0:10002:443
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=secret
   redis:
     image: redis:6-alpine
     ports:
